@@ -1,2 +1,5 @@
 # edit-distance-py
-Zero-dependency Python implementation.
+
+Levenshtein and Damerau-Levenshtein edit distance
+
+Zero-dependency Python. Stdlib only.

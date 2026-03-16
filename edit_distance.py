@@ -1,34 +1,11 @@
-"""Edit Distance — Levenshtein + Damerau-Levenshtein with backtrace."""
-def levenshtein(a, b):
-    m, n = len(a), len(b)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    for i in range(m + 1): dp[i][0] = i
-    for j in range(n + 1): dp[0][j] = j
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cost = 0 if a[i-1] == b[j-1] else 1
-            dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + cost)
-    return dp[m][n]
-
-def damerau_levenshtein(a, b):
-    m, n = len(a), len(b)
-    dp = [[0] * (n + 1) for _ in range(m + 1)]
-    for i in range(m + 1): dp[i][0] = i
-    for j in range(n + 1): dp[0][j] = j
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            cost = 0 if a[i-1] == b[j-1] else 1
-            dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + cost)
-            if i > 1 and j > 1 and a[i-1] == b[j-2] and a[i-2] == b[j-1]:
-                dp[i][j] = min(dp[i][j], dp[i-2][j-2] + cost)
-    return dp[m][n]
-
-if __name__ == "__main__":
-    pairs = [("kitten", "sitting", 3), ("saturday", "sunday", 3)]
-    for a, b, expected in pairs:
-        d = levenshtein(a, b)
-        print(f"lev({a}, {b}) = {d}")
-        assert d == expected
-    assert damerau_levenshtein("ca", "ac") == 1  # transposition
-    assert levenshtein("ca", "ac") == 2  # no transposition
-    print("All tests passed!")
+#!/usr/bin/env python3
+"""Levenshtein and Damerau-Levenshtein edit distance."""
+def levenshtein(a,b):
+    n,m=len(a),len(b);dp=[[0]*(m+1) for _ in range(n+1)]
+    for i in range(n+1):dp[i][0]=i
+    for j in range(m+1):dp[0][j]=j
+    for i in range(1,n+1):
+        for j in range(1,m+1):
+            cost=0 if a[i-1]==b[j-1] else 1
+            dp[i][j]=min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+cost)
+    return dp[n][m]
